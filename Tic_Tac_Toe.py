@@ -1,5 +1,8 @@
 import random
 
+player = 'X'
+oponent = "O"
+
 def Display_Board(Arr, i):
 
     # This Funtion Displays Tic Tac Toe Game
@@ -11,7 +14,6 @@ def Display_Board(Arr, i):
     print("---------------")
     print("  ", Arr[2][0], "|", Arr[2][1], "|", Arr[2][2], " ")
 
-
 def Toss():
     # This Fuction decides how will start the Game
     Number = random.randint(1, 2)
@@ -20,175 +22,157 @@ def Toss():
     else:
         return "Human"
 
-def Row_Check(A):
-    # This Fuction helps in deciding Winner
-    Winner = None
-    for i in range(3):
-        if((A[i][0] == A[i][1]) and (A[i][0] == A[i][2])):
-            if(A[i][0] == 'X'):
-                Winner = "Human"
-                return True, Winner
-            elif(A[i][0] == 'O'):
-                Winner = "Computer"
-                return True, Winner
-    return False, Winner
+def evaluate(board):
 
-def Column_Check(A):
-    # This Fuction helps in deciding Winner
-    Winner = None
-    for i in range(3):
-        if((A[0][i] == A[1][i]) and (A[0][i] == A[2][i])):
-            if(A[0][i] == 'X'):
-                Winner = "Human"
-                return True, Winner
-            elif(A[0][i] == 'O'):
-                Winner = "Computer"
-                return True, Winner
-    return False, Winner
+    for row in range(3):
+        if(board[row][0] == board[row][1] and board[row][1] == board[row][2] and board[row][0] != " "):
+            if(board[row][0] == oponent):
+                return 10
+            else:
+                return -10
 
-def Digonal_Check(A):
-    # This Function helps in deciding Winner
-    Winner = None
-    if((A[0][0] == A[1][1]) and (A[0][0] == A[2][2])):
-        if(A[0][0] == 'X'):
-            Winner = "Human"
-            return True, Winner
-        elif(A[0][0] == 'O'):
-            Winner = "Computer"
-            return True, Winner
-    elif((A[0][2] == A[1][1]) and (A[0][2] == A[2][0])):
-        if(A[0][2] == 'X'):
-            Winner = "Human"
-            return True, Winner
-        elif(A[0][2] == 'O'):
-            Winner = "Computer"
-            return True, Winner
-    return False, Winner
+    for col in range(3):
+        if(board[0][col] == board[1][col] and board[1][col] == board[2][col] and board[0][col] != " "):
+            if(board[0][col] == oponent):
+                return 10
+            else:
+                return -10
 
-def Check_Win(Arr):
-    # This Fuction decides the Winner
-    Game_Over = False
-    Winner = None
-    Game_Over_1, Winner_1 = Row_Check(Arr)
-    Game_Over_2, Winner_2 = Column_Check(Arr)
-    Game_Over_3, Winner_3 = Digonal_Check(Arr)
-    if(Game_Over_1 or Game_Over_2 or Game_Over_3):
-        Game_Over = True
-        if(Game_Over_1):
-            Winner = Winner_1
-        elif(Game_Over_2):
-            Winner = Winner_2
+    if(board[0][0] == board[1][1] and board[1][1] == board[2][2] and board[0][0] != " "):
+        if(board[0][0] == oponent):
+            return 10
         else:
-            Winner = Winner_3
-    
-    return Game_Over, Winner
+            return -10
+    elif(board[0][2] == board[1][1] and board[1][1] == board[2][0] and board[0][2] != " "):
+        if(board[0][2] == oponent):
+            return 10
+        else:
+            return -10
 
-def Player_Move(Arr):
-    # This Function takes input from the human player
-    X, Y = list(map(int, input().split()))
-    Flag = 0
-    if(Arr[X][Y] != ' '):
-        print("Please enter valid mode.")
-        Flag = 1
-        return Arr, Flag
-    Arr[X][Y] = 'X'
-    return Arr, Flag
+    return 0
 
-def check_tie(Arr):
-    for i in range(3):
-        for j in range(3):
-            if(Arr[i][j] == ' '):
-                return False
-    return True
 
-def minimizer_maximizer(board, isMaximizing):
+def isEmpty(board):
 
-    Game_Over, Winner = Check_Win(board)
-    Tie = check_tie(board)
+    for row in range(3):
+        for col in range(3):
+            if(board[row][col] == " "):
+                return True
 
-    if Winner == 'Computer':
-        return 1
-    elif Winner == 'Human':
-        return -1
-    elif Tie:
+    return False
+
+
+def minimizer_maximizer(board, depth, isMaximizer):
+
+    score = evaluate(board)
+    if(score == 10):
+        return 10 - depth
+    elif(score == -10):
+        return depth - 10
+
+    if(isEmpty(board) == False):
         return 0
 
-    if isMaximizing:
-        bestScore = float('-inf')
-        for i in range(3):
-            for j in range(3):
-                if(board[i][j] == ' '):
-                    board[i][j] = 'X'
-                    score = minimizer_maximizer(board, False)
-                    board[i][j] = ' '
-                    bestScore = max(score, bestScore)
+    if(isMaximizer):
+        bestScore = float("-inf")
+        for row in range(3):
+            for col in range(3):
+                if(board[row][col] == " "):
+                    board[row][col] = oponent
+                    score = minimizer_maximizer(board, depth + 1, not isMaximizer)
+                    if(score > bestScore):
+                        bestScore = score
+                    board[row][col] = " "
         return bestScore
     else:
-        bestScore = float('inf')
-        for i in range(3):
-            for j in range(3):
-                if(board[i][j] == ' '):
-                    board[i][j] = 'O'
-                    score = minimizer_maximizer(board, True)
-                    board[i][j] = ' '
-                    bestScore = min(score, bestScore)
+        bestScore = float("inf")
+        for row in range(3):
+            for col in range(3):
+                if(board[row][col] == " "):
+                    board[row][col] = player
+                    score = minimizer_maximizer(board, depth + 1, not isMaximizer)
+                    if(score < bestScore):
+                        bestScore = score
+                    board[row][col] = " "
         return bestScore
 
-def Computer_Move(board):
-    bestScore = float('-inf')
-    bestMove = (-1, -1)
-    for i in range(3):
-        for j in range(3):
-            if(board[i][j] == ' '):
-                board[i][j] = 'O'
-                score = minimizer_maximizer(board, True)
-                board[i][j] = ' '
+
+def bestMove(board):
+
+    bestMove = None
+    bestScore = float("-inf")
+    for row in range(3):
+        for col in range(3):
+            if(board[row][col] == " "):
+                board[row][col] = oponent
+                score = minimizer_maximizer(board, 0, False)
                 if(score > bestScore):
                     bestScore = score
-                    bestMove = (i, j)
-    x, y = bestMove
-    board[x][y] = 'O'
+                    bestMove = (row, col)
+                board[row][col] = " "
+    
+    if(bestMove != None):
+        x, y = bestMove
+        board[x][y] = oponent
+    
+    return board
+
+def Player_Move(board):
+    # This Function takes input from the human player
+    Flag = 1
+    while(Flag):
+        X, Y = list(map(int, input().split()))
+        if(board[X][Y] == ' '):
+            Flag = 0
+            board[X][Y] = player
+        else:
+            print("Please enter valid mode.")
+    
     return board
 
 def Game():
-    # This Funtion helps in starting the Game
-    Arr = []
-    for i in range(3):
-        Arr.append([' ', ' ', ' '])
-    i = 1
-    Game_Over = False
-    Display_Board(Arr,  0)
+
+    board = []
+    for _ in range(3):
+        board.append([' ', ' ', ' '])
+    
+    Display_Board(board,  0)
     Start = Toss()
-    while((Game_Over != True) and i < 9):
-        if(Start == 'Computer'):
-            Arr = Computer_Move(Arr)
-            Display_Board(Arr, i)
+    empty = True
+    score = 0
+    i = 1
+    while(empty and score == 0):
+        if(Start == "Computer"):
+            board = bestMove(board)
+            Display_Board(board, i)
             i = i + 1
-            Game_Over, Winner = Check_Win(Arr)
-            if(Game_Over == False):
-                Flag = 1
-                while(Flag):
-                    Arr, Flag = Player_Move(Arr)
-                Game_Over, Winner = Check_Win(Arr)
-                Display_Board(Arr, i)
+            empty = isEmpty(board)
+            score = evaluate(board)
+            if(empty and score == 0):
+                board = Player_Move(board)
+                Display_Board(board, i)
                 i = i + 1
+                empty = isEmpty(board)
+                score = evaluate(board)
         else:
-            Flag = 1
-            while(Flag):
-                Arr, Flag = Player_Move(Arr)
-            Game_Over, Winner = Check_Win(Arr)
-            Display_Board(Arr, i)
+            board = Player_Move(board)
+            Display_Board(board, i)
             i = i + 1
-            if(Game_Over == False):
-                Arr = Computer_Move(Arr)
-                Display_Board(Arr, i)
+            empty = isEmpty(board)
+            score = evaluate(board)
+            if(empty and score == 0):
+                board = bestMove(board)
+                Display_Board(board, i)
                 i = i + 1
-                Game_Over, Winner = Check_Win(Arr)
+                empty = isEmpty(board)
+                score = evaluate(board)
 
-    if(Game_Over == False):
+    if(score == 10):
+        print("Better Luck Next Time....")
+    elif (score == -10):
+        print("Winner Winner Chicken Dinner!!!")
+    else:
         print("Draw")
-    elif(Game_Over == True):
-        print(Winner)
-
 
 Game()
+
