@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tic Tac Toe</title>
+  <link rel="stylesheet" href="tic-tac-toe-styles.css">
+</head>
+
+<body>
+  <div class="heading">
+    <h1 id="title"><span class="red">T</span><span class="yellow">I</span><span class="red">C</span>
+      <span class="yellow">T</span><span class="red">A</span><span class="yellow">C</span> <span
+        class="red">T</span><span class="yellow">O</span><span class="red">E</span>
+    </h1>
+  </div>
+  <div class="variable-content flex">
+    <h2 id="banner">Select Dificulty</h2>
+    <div>
+      <button id="Imposible" class="level-buttons" onclick="level_setter(this.id)">
+        <h3>Imposible</h3>
+      </button>
+      <button id="Easy" class="level-buttons" onclick="level_setter(this.id)">
+        <h3>Easy</h3>
+      </button>
+    </div>
+    <button id="result" onclick="Game()">
+      <h1>Start Game</h1>
+    </button>
+  </div>
+  <div class="board">
+    <div class="grid-container">
+      <div class="buttons" id="zero-zero" onclick="playerMove(this.id)"></div>
+      <div class="buttons" id="zero-one" onclick="playerMove(this.id)"></div>
+      <div class="buttons" id="zero-two" onclick="playerMove(this.id)"></div>
+      <div class="buttons" id="one-zero" onclick="playerMove(this.id)"></div>
+      <div class="buttons" id="one-one" onclick="playerMove(this.id)"></div>
+      <div class="buttons" id="one-two" onclick="playerMove(this.id)"></div>
+      <div class="buttons" id="two-zero" onclick="playerMove(this.id)"></div>
+      <div class="buttons" id="two-one" onclick="playerMove(this.id)"></div>
+      <div class="buttons" id="two-two" onclick="playerMove(this.id)"></div>
+    </div>
+  </div>
+  <script src="tic-tac-toe-script.js"></script>
+</body>
+
+</html>

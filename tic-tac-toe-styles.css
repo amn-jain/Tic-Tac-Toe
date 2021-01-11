@@ -1,0 +1,136 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #232b2b;
+}
+
+.heading {
+    height: 25vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#title {
+    text-align: center;
+    width: 50vw;
+    font-size: 5rem;
+}
+
+.red {
+    color: #f54242;
+}
+
+.yellow {
+    color: #ffff0f;
+}
+
+.flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.variable-content {
+    height: 15vh;
+}
+
+#result {
+    width: 300px;
+    text-align: center;
+    background-color: #232b2b;
+    border: 0;
+    color: #909090;
+}
+
+.level-buttons{
+    width: 300px;
+    text-align: center;
+    background-color: #232b2b;
+    border: 0;
+    color: #909090;
+}
+
+#banner {
+    color: #909090;
+    text-align: center;
+}
+
+.board {
+    height: 300px;
+    width: 300px;
+    margin: 10vh auto;
+}
+
+.grid-container {
+    display: grid;
+    height: 100%;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.buttons{
+    height: 100px;
+    width: 100px;
+    font-size: 5rem;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+#zero-zero {
+    border-right: solid  #909090 1px;
+    border-bottom: solid  #909090 1px;
+}
+
+#zero-one {
+    border-left: solid  #909090 1px;
+    border-right: solid  #909090 1px;
+    border-bottom: solid  #909090 1px;
+}
+
+#zero-two {
+    border-left: solid  #909090 1px;
+    border-bottom: solid  #909090 1px;
+}
+
+#one-zero {
+    border-right: solid  #909090 1px;
+    border-bottom: solid  #909090 1px;
+    border-top: solid  #909090 1px;
+} 
+
+#one-one {
+    border: solid  #909090 1px;
+}
+
+#one-two {
+    border-left: solid  #909090 1px;
+    border-bottom: solid  #909090 1px;
+    border-top: solid  #909090 1px;
+}
+
+#two-zero {
+    border-top: solid  #909090 1px;
+    border-right: solid  #909090 1px;
+} 
+
+#two-one {
+    border-left: solid  #909090 1px;
+    border-right: solid  #909090 1px;
+    border-top: solid  #909090 1px;
+}
+
+#two-two {
+    border-top: solid  #909090 1px;
+    border-left: solid  #909090 1px;
+}
+
+
+
